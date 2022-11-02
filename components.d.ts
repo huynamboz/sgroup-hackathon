@@ -3,7 +3,7 @@
 // Read more: https://github.com/vuejs/core/pull/3399
 import '@vue/runtime-core'
 
-export { }
+export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
@@ -12,6 +12,7 @@ declare module '@vue/runtime-core' {
     AFormItem: typeof import('ant-design-vue/es')['FormItem']
     AInput: typeof import('ant-design-vue/es')['Input']
     ExampleOrganismName: typeof import('./src/components/page_organisms/_example_page_name/ExampleOrganismName.vue')['default']
+    OrganismName: typeof import('./src/components/page/page_name/OrganismName.vue')['default']
     ProductCard: typeof import('./src/components/common/ProductCard/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
