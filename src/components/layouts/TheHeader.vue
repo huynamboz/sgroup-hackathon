@@ -1,7 +1,7 @@
 <template>
-  <div class="fixed top-0 left-0 h-[72px] w-full bg-white z-50 flex justify-between items-center px-5">
+  <div class="fixed top-0 left-0 h-[72px] w-full bg-white z-50 flex justify-between items-center px-5 ">
     <div></div>
-    <div v-if="authStore.user" class="flex items-center gap-5">
+    <div v-if="authStore.user" class="flex items-center gap-5 relative">
       <p>Số dư: {{ authStore.user.balance }}</p>
       <p>Hello, {{ authStore.user.name }}</p>
       <img
@@ -15,10 +15,41 @@
         class="cursor-pointer w-[40px] h-[40px] rounded-full object-cover"
         :src="authStore.user.avatar"
         alt=""
+        @click="togglePopup"
       />
+      <div
+        class="popup bg-white border border-gray-300 shadow-md absolute right-0 top-14"
+        :class="{ 'block': isPopupVisible, 'hidden': !isPopupVisible }"
+
+      >
+      <div class="flex flex-col ">
+          <div class=" px-4 text-sm font-medium ">Xin chào ,{{ authStore.user.name }}!</div>
+          <div class="px-4 pb-2 text-xs font-normal text-gray-500">{{ authStore.user.email }}</div>
+        </div>
+      <div class="border-b-2"></div>
+        <a href="#" class="block px-4 py-2 hover:bg-gray-100" @click="editProfile">Edit Profile</a>
+          <a href="#" class="block px-4 py-2 hover:bg-gray-100" @click="logout">Log Out</a>
+      </div>
     </div>
   </div>
 </template>
 <script setup>
+import { ref } from 'vue'
 import { authStore } from '@/stores/auth.store'
+const isPopupVisible = ref(false);
+
+const togglePopup = () => {
+  console.log('togglePopup');
+  console.log(isPopupVisible.value);
+  isPopupVisible.value = !isPopupVisible.value;
+};
+
+const editProfile = () => {
+  window.location.href = '/update-profile'
+};
+
+const logout = () => {
+  localStorage.clear()
+  window.location.href = '/login'
+};
 </script>
