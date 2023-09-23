@@ -50,7 +50,7 @@ import { onBeforeMount, ref } from 'vue'
 const props = defineProps({
   show: Boolean,
   user: Object,
-})
+})  
 const emits = defineEmits(['close', 'updateUser'])
 const userData = ref(null)
 onBeforeMount(() => {

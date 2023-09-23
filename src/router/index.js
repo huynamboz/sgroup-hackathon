@@ -25,11 +25,6 @@ const routes = [
     meta: { layout: 'empty' },
     component: () => import('@/views/auth/RegisterPage.vue'),
   },
-  {
-    path: '/update-profile',
-    name: 'update-profile',
-    component: () => import('@/views/auth/UpdateProfile.vue'),
-  }
 ]
 const router = createRouter({
   history: createWebHistory(),
