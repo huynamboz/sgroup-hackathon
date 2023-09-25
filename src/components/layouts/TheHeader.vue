@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed top-0 left-0 h-[72px] w-full bg-white z-50 flex justify-between items-center px-5">
+  <div class="fixed top-0 left-0 h-[72px] w-full bg-white z-50 flex justify-between items-center px-5 ">
     <div></div>
     <div v-if="authStore.user" class="flex items-center gap-5 relative">
       <p>Số dư: {{ authStore.user.balance }}</p>
@@ -18,11 +18,11 @@
         @click="togglePopup"
       />
       <div
-        class="popup bg-white border border-gray-300 shadow-md absolute right-0 top-14"
+        class="popup bg-white border border-gray-300 shadow-md absolute right-0 top-14 rounded-md"
         :class="{ block: isPopupVisible, hidden: !isPopupVisible }"
       >
         <div class="flex flex-col">
-          <div class="px-4 text-sm font-medium">Xin chào ,{{ authStore.user.name }}!</div>
+          <div class="px-4 text-sm font-medium pt-2">Xin chào ,{{ authStore.user.name }}!</div>
           <div class="px-4 pb-2 text-xs font-normal text-gray-500">{{ authStore.user.email }}</div>
         </div>
         <div class="border-b-2"></div>
