@@ -17,6 +17,7 @@ const layout = ref()
 watch(
     () => route.meta.layout as string | undefined,
     (layoutName: string | undefined) => {
+      console.log(layoutName)
         if (layoutName === "404") {
             layout.value = undefined
             return
@@ -31,7 +32,7 @@ watch(
 )
 
 // sometimes layout changing are not so smooth, so you can use this and show a loading screen to hide the layout changing
-const isLoadingLayout = ref(true)
+const isLoadingLayout = ref<boolean>(true)
 setTimeout(() => {
     isLoadingLayout.value = false
 }, 600)

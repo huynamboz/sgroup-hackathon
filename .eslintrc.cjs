@@ -7,7 +7,12 @@ module.exports = {
     extends: ["plugin:vue/strongly-recommended", "eslint:recommended", "@vue/typescript/recommended", "prettier"],
     plugins: ["@typescript-eslint", "prettier"],
     rules: {
-        "prettier/prettier": "error",
+        "prettier/prettier": [
+            "error",
+            {
+                endOfLine: "auto",
+            },
+        ],
         // for naming file index.vue
         "vue/multi-word-component-names": "off",
 
