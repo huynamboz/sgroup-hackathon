@@ -7,7 +7,10 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    AButton: typeof import('ant-design-vue/es')['Button']
+    CustomField: typeof import('./src/components/common/Forms/CustomField.vue')['default']
+    FormItemPicker: typeof import('./src/components/Forms/FormItemPicker.vue')['default']
+    FormItemView: typeof import('./src/components/Forms/FormItemView.vue')['default']
+    FormView: typeof import('./src/components/common/Forms/FormView.vue')['default']
     OrganismName: typeof import('./src/components/page/page_name/OrganismName.vue')['default']
     ProductCard: typeof import('./src/components/common/ProductCard/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

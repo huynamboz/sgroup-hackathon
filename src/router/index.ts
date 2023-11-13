@@ -26,6 +26,18 @@ const router = createRouter({
             path: "/products/:id",
             component: () => import("@/views/products/_id/index.vue"),
         },
+        {
+            path: "/:pathMatch(.*)*",
+            component: () => import("@/views/404/index.vue"),
+        },
+        {
+            path: "/forms/:id",
+            component: () => import("@/views/forms/_id/index.vue"),
+        },
+        {
+          path: "/forms/create",
+          component: () => import("@/views/forms/create/index.vue"),
+        }
     ],
 })
 
