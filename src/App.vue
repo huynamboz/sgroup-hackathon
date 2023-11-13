@@ -17,7 +17,6 @@ const layout = ref()
 watch(
     () => route.meta.layout as string | undefined,
     (layoutName: string | undefined) => {
-      console.log(layoutName)
         if (layoutName === "404") {
             layout.value = undefined
             return
