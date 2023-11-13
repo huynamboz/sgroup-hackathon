@@ -7,22 +7,22 @@ defineProps<{
 }>()
 const dataInp = ref<{
     TEXT: string
-    CHECKBOX: string
+    SELECT: string
     FILE: string
     RADIO: string
 }>({
     TEXT: "",
-    CHECKBOX: "",
+    SELECT: "",
     FILE: "",
     RADIO: "",
 })
 </script>
 <template>
     <div class="form-container">
-        <h1 class="form-container__title">Tuyển thành viên</h1>
+        <h1 class="form-container__title">{{ data.form.name }}</h1>
         <div class="form-container__body">
             <div class="form-container__body__header">
-                <p class="form-container__body__header__subtitle">Tuyển thành viên cho chuyên môn lập trình khóa mùa đông 2023</p>
+                <p class="form-container__body__header__subtitle">{{ data.form.description }}</p>
             </div>
             <!-- <div class="form-container__body__form">
                   <el-input v-model="form.email" placeholder="Email"></el-input>
@@ -32,7 +32,7 @@ const dataInp = ref<{
             <div class="form-container__body__form">
                 <div class="form-container__body__form__item" v-for="field in data.form.fields" :key="field.title">
                     <p class="form-item__name">{{ field.title }}</p>
-                    <custom-field v-if="dataInp" v-model="dataInp[`${field.type}`]" :field="field" :options="field?.options" />
+                    <custom-field v-if="dataInp" v-model="dataInp[`${field.type}`]" :field="field" :options="field?.optionsSelect" />
                 </div>
             </div>
             <div class="form-container__body__action">

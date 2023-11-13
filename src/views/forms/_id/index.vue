@@ -5,12 +5,12 @@ import type { IForm } from "@/types/form"
 
 const dataInp = ref<{
     TEXT: string
-    CHECKBOX: string
+    CHECKBOX: string[]
     FILE: string
     RADIO: string
 }>({
     TEXT: "",
-    CHECKBOX: "",
+    CHECKBOX: [""],
     FILE: "",
     RADIO: "",
 })

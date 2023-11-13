@@ -24,8 +24,8 @@ const handleChange = (file: any, fileList: any) => {
 </script>
 <template>
     <el-input v-if="field.type === 'TEXT'" v-model="data.input" @input="$emit('update:modelValue', data.input)" placeholder="Please input" />
-    <el-select v-else-if="field.type === 'CHECKBOX'" @change="$emit('update:modelValue', data.input)" v-model="data.input" @input="$emit('update:modelValue', data.input)" placeholder="Please select">
-        <el-option v-for="item in options" :key="item" :label="item.label" :value="item" />
+    <el-select v-else-if="field.type === 'SELECT'" @change="$emit('update:modelValue', data.input)" v-model="data.input" @input="$emit('update:modelValue', data.input)" placeholder="Please select">
+        <el-option v-for="item in field.optionsSelect" :key="item" :label="item.value" :value="item" />
     </el-select>
     <el-upload
         :on-change="handleChange"

@@ -1,11 +1,11 @@
 export interface IOptionsCheckboxField {
-    label: string
+    id: string
     value: string
 }
 export interface IFieldItem {
     title: string
-    type: "TEXT" | "FILE" | "CHECKBOX" | "RADIO"
-    options?: string[] | IOptionsCheckboxField[]
+    type: "TEXT" | "FILE" | "RADIO" | "SELECT"
+    optionsSelect?: IOptionsCheckboxField[]
     files?: string[]
 }
 export interface IForm {
