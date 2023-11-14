@@ -4,12 +4,6 @@ import { ref, computed } from "vue"
 import type { IFieldItem, IForm } from "@/types/form"
 import { v4 as uuid } from "uuid"
 
-defineProps<{
-    modelValue: {
-        name: string
-        description: string
-    }
-}>()
 
 defineEmits<{
     (
@@ -31,17 +25,20 @@ const formInfo = ref<{
 
 const list1 = ref<IFieldItem[]>([
     {
-        title: "",
-        type: "TEXT",
+        id: uuid(),
+        label: "",
+        type: "text",
     },
     {
-        title: "",
-        type: "FILE",
+        id: uuid(),
+        label: "",
+        type: "file",
     },
     {
-        title: "",
-        type: "SELECT",
-        optionsSelect: [{ id: uuid(), value: "" }],
+        id: uuid(),
+        label: "",
+        type: "drop_down",
+        options: [],
     },
 ])
 
@@ -50,6 +47,7 @@ const log = (evt: any) => {
 }
 const cloneDog = (data: IFieldItem) => {
     console.log("cloneDog", { ...data })
+    const clone = { ...data }
     return {
         ...data,
         id: uuid(),
@@ -94,18 +92,18 @@ const cloneDog = (data: IFieldItem) => {
         <draggable class="list-group" :clone="cloneDog" :group="{ name: 'people', pull: 'clone', put: false }" :list="list1" @change="log" item-key="name">
             <template #item="{ element, index }">
                 <div class="list-group-item">
-                    <el-tooltip class="box-item" effect="dark" content="Input" placement="top" v-if="element.type == 'TEXT'">
-                        <div :class="`list-group__${element.type}`">Text field</div>
+                    <el-tooltip class="box-item" effect="dark" content="Input" placement="top" v-if="element.type == 'text'">
+                        <div :class="`list-group__${element.type}`">text field</div>
                     </el-tooltip>
-                    <el-tooltip class="box-item" effect="dark" content="File choose" placement="top" v-if="element.type == 'FILE'">
+                    <el-tooltip class="box-item" effect="dark" content="file choose" placement="top" v-if="element.type == 'file'">
                         <div :class="`list-group__${element.type}`">
                             <el-icon><UploadFilled /></el-icon>
                             <p>Upload</p>
                         </div>
                     </el-tooltip>
-                    <el-tooltip class="box-item" effect="dark" content="Select box " placement="top" v-if="element.type == 'SELECT'">
+                    <el-tooltip class="box-item" effect="dark" content="drop_down box " placement="top" v-if="element.type == 'drop_down'">
                         <div :class="`list-group__${element.type}`">
-                            Select box <el-icon><ArrowDown /></el-icon>
+                            drop_down box <el-icon><ArrowDown /></el-icon>
                         </div>
                     </el-tooltip>
                 </div>
@@ -139,7 +137,7 @@ const cloneDog = (data: IFieldItem) => {
         &-item {
             margin-top: 10px;
         }
-        &__TEXT {
+        &__text {
             width: 100%;
             height: 40px;
             background: #fff;
@@ -152,7 +150,7 @@ const cloneDog = (data: IFieldItem) => {
             font-size: 0.875rem;
         }
 
-        &__FILE {
+        &__file {
             width: 100%;
             height: 60px;
             background: #fff;
@@ -167,7 +165,7 @@ const cloneDog = (data: IFieldItem) => {
             font-size: 0.875rem;
         }
 
-        &__SELECT {
+        &__drop_down {
             width: 100%;
             height: 40px;
             background: #fff;

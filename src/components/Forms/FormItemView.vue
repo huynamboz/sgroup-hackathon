@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import draggable from "vuedraggable"
-import { ref, computed } from "vue"
+import { ref, computed, watch } from "vue"
 import type { IFieldItem, IForm } from "@/types/form"
 import FormView from "@/components/common/Forms/FormView.vue"
 import { v4 as uuid } from "uuid"
@@ -9,18 +9,32 @@ const props = defineProps<{
     modelValue: IForm
 }>()
 
-const list2 = ref<IFieldItem[]>([])
+const emits = defineEmits<{
+    (e: "update:modelValue", value: IForm): void
+}>()
 
-const dataFormView = computed(() => {
-    return {
+const list2 = ref<IFieldItem[]>([])
+watch(
+    () => list2.value,
+    (val) => {
+        console.log("list2", val)
+        emits("update:modelValue", dataFormView.value)
+    },
+    { deep: true }
+)
+const dataFormView = computed((): IForm => {
+    const data = {
         id: "1",
-        user: props.modelValue.user,
-        form: {
-            name: props.modelValue.form.name,
-            description: props.modelValue.form.description,
-            fields: list2.value,
+        title: props.modelValue.title,
+        description: props.modelValue.description,
+        questions: list2.value,
+        owner: {
+            email: "1",
+            name: "Nguyen Van A",
         },
     }
+    console.log("dataFormView", data)
+    return data
 })
 const log = (evt: any) => {
     console.log(evt)
@@ -34,33 +48,33 @@ const title = ref("")
 </script>
 <template>
     <div class="form-detail-container">
-        <div class="detail__title">{{ modelValue.form.name }}</div>
+        <div class="detail__title">{{ modelValue.title }}</div>
         <div class="form-detail-body">
-            <p class="form-detail-body__subtitle">{{ modelValue.form.description }}</p>
+            <p class="form-detail-body__subtitle">{{ modelValue.description }}</p>
             <draggable class="list-group" group="people" :list="list2" @change="log" item-key="id">
                 <template #item="{ element, index }">
                     <div class="list-group-item">
-                        <el-input style="width: 100px" v-model="element.title" placeholder="Title" />
-                        <div :class="`list-group__${element.type}`" v-if="element.type == 'TEXT'">Enter input</div>
-                        <div :class="`list-group__${element.type}`" v-if="element.type == 'FILE'">
+                        <el-input style="width: 100px" v-model="element.label" placeholder="Title" />
+                        <div :class="`list-group__${element.type}`" v-if="element.type == 'text'">Enter input</div>
+                        <div :class="`list-group__${element.type}`" v-if="element.type == 'file'">
                             <el-icon><UploadFilled /></el-icon>
                             <p>Upload</p>
                         </div>
-                        <div class="selectbox-container" v-if="element.type == 'SELECT'">
-                            <el-select v-model="element.options" placeholder="Choose option">
-                                <el-option v-for="item in element.optionsSelect" :key="item" :label="item.value" :value="item.value" />
+                        <div class="selectbox-container" v-if="element.type == 'drop_down'">
+                            <el-select placeholder="Choose option">
+                                <el-option v-for="item in element.options" :key="item.id" :label="item.value" :value="item.value" />
                             </el-select>
                             <div class="selectbox-container-item">
                                 <div class="selectbox-container-item__inp">
-                                    <div class="selectbox-container-item__inp__body" v-for="(item, index) in element.optionsSelect" :key="index">
-                                        <el-icon style="cursor: pointer; margin-top: 10px" @click="element.optionsSelect.splice(index, 1)"><Remove /></el-icon>
-                                        <el-input v-model="element.optionsSelect[index].value" placeholder="Enter option" />
+                                    <div class="selectbox-container-item__inp__body" v-for="(item, i) in element.options" :key="item.id">
+                                        <el-icon style="cursor: pointer; margin-top: 10px" @click="element.options.splice(i, 1)"><Remove /></el-icon>
+                                        <el-input v-model="element.options[i].value" placeholder="Enter option" />
                                     </div>
                                 </div>
                                 <el-button
                                     type="primary"
                                     @click="
-                                        element.optionsSelect.push({
+                                        element.options.push({
                                             id: uuid(),
                                             value: '',
                                         })
@@ -141,7 +155,7 @@ const title = ref("")
             align-items: start;
             gap: 10px;
         }
-        &__TEXT {
+        &__text {
             width: 100%;
             height: 40px;
             cursor: move;
@@ -155,7 +169,7 @@ const title = ref("")
             font-size: 0.875rem;
         }
 
-        &__FILE {
+        &__file {
             width: 100%;
             cursor: move;
             height: 60px;
@@ -171,7 +185,7 @@ const title = ref("")
             font-size: 0.875rem;
         }
 
-        &__SELECT {
+        &__drop_down {
             width: 100%;
             height: 40px;
             background: #fff;
