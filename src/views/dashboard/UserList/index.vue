@@ -1,12 +1,17 @@
 <template>
     <div class="container-list">
-      <div class="container-search">
+        <div class="container-search">
+            <div class="container-left">
                 <h1>User List</h1>
                 <span class="input-search">
                     <el-icon class="icon-search"><Search /></el-icon>
-                    <input type="text" v-model="keySearch"  placeholder="Enter email, name..vv">                
+                    <input type="text" v-model="keySearch" placeholder="Enter title, description..." />
                 </span>
             </div>
+            <div class="button-create">
+                <button @click="CreateForm()">Create Form</button>
+            </div>
+        </div>
         <div class="container-card">
             <div>
                 <div class="row-title-card">
@@ -16,82 +21,62 @@
                         </th>
                     </table>
                 </div>
-                <div v-for="user in filteredUsers" :key="user.id">
-                    <UserCard :user="user" />
+                <div v-for="form in filteredUsers" :key="form.id">
+                    <UserCard :form="form" />
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script setup lang="ts">
-import { ref, computed } from "vue"
+import { ref, computed, onBeforeMount } from "vue"
+import { useRouter } from "vue-router"
 import UserCard from "@/views/dashboard/UserCard/index.vue"
-const tableColumns = ref(["user", "role", "status", "last activity", "join date", "actions"])
-const userData = ref([
-    {
-        id: 1,
-        avatar: "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg",
-        name: "John Doe",
-        email: "john.doe@example.com",
-        role: "Admin",
-        status: "Active",
-        lastActivity: "2023-11-14 12:30:00",
-        created: "2023-11-01",
-    },
-    {
-        id: 2,
-        avatar: "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg",
-        name: "Jane Smith",
-        email: "jane.smith@example.com",
-        role: "User",
-        status: "Inactive",
-        lastActivity: "2023-11-13 15:45:00",
-        created: "2023-10-20",
-    },
-    {
-        id: 3,
-        avatar: "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg",
-        name: "Bob Johnson",
-        email: "bob.johnson@example.com",
-        role: "Moderator",
-        status: "Active",
-        lastActivity: "2023-11-14 09:20:00",
-        created: "2023-11-05",
-    },
-    {
-        id: 4,
-        avatar: "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg",
-        name: "Alice Williams",
-        email: "alice.williams@example.com",
-        role: "User",
-        status: "Active",
-        lastActivity: "2023-11-14 08:00:00",
-        created: "2023-11-10",
-    },
-    {
-        id: 5,
-        avatar: "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg",
-        name: "Charlie Brown",
-        email: "charlie.brown@example.com",
-        role: "Guest",
-        status: "Inactive",
-        lastActivity: "2023-11-12 18:10:00",
-        created: "2023-11-02",
-    },
-])
+import { getAllFormApi } from "@/services/form.service"
+import { ElNotification } from "element-plus"
+import type { IForm } from "@/types/form"
+
+
+
+
+const router = useRouter()
+const tableColumns = ref(["Title", "Description","Question","CreateAt","UpdateAt"])
+const listForm = ref<Array<IForm>>([])
+
+const getListForm = async (): Promise<void> => {
+    try {
+        const res = await getAllFormApi()
+        ElNotification({
+            title: "Success",
+            message: "Get All form success",
+            type: "success",
+        })
+        listForm.value = res.data
+        console.log(listForm.value)
+    } catch(error) {
+        console.log("error", error)
+
+    }
+}
+onBeforeMount(() => {
+    getListForm()
+})
+
 const keySearch = ref<string>("")
 
 const filteredUsers = computed(() => {
-    return userData.value.filter(
-        (user) =>
-            user.name.toLowerCase().includes(keySearch.value.toLowerCase()) ||
-            user.email.toLowerCase().includes(keySearch.value.toLowerCase()) ||
-            user.role.toLowerCase().includes(keySearch.value.toLowerCase()) ||
-            user.status.toLowerCase().includes(keySearch.value.toLowerCase()) ||
-            user.lastActivity.toLowerCase().includes(keySearch.value.toLowerCase()) ||
-            user.created.toLowerCase().includes(keySearch.value.toLowerCase())
+    return listForm.value.filter(
+        (form) =>
+            form.title.toLowerCase().includes(keySearch.value.toLowerCase()) ||
+            form.description.toLowerCase().includes(keySearch.value.toLowerCase())
+            // form.updatedAt.toLowerCase().includes(keySearch.value.toLowerCase()) ||
+            // form.createdAt.toLowerCase().includes(keySearch.value.toLowerCase())
     )
 })
+
+const CreateForm = () => {
+    router.push("/forms/create")
+}
 </script>
 <style lang="scss" scoped>
 .container-list {
@@ -111,19 +96,27 @@ const filteredUsers = computed(() => {
     display: grid;
     font-size: 14px;
 }
-.row-title-card table{
-  display: grid;
-    grid-template-columns: 210px 170px 120px 250px 190px auto;
+.row-title-card table {
+    display: grid;
+    grid-template-columns: 50px 400px 110px 180px 150px;
     align-items: center;
-
+    background-color: #F2F3F4;
+    padding: 15px;
+    border-radius: 16px;
 }
 .container-search {
     display: flex;
+    justify-content: space-between;
     margin-bottom: 50px;
     gap: 30px;
     margin-top: 20px;
     margin-left: 20px;
-
+}
+.container-left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
 }
 .input-search {
     position: relative;
@@ -142,5 +135,11 @@ const filteredUsers = computed(() => {
     width: 24px;
     height: 24px;
     left: 0;
+}
+.button-create button {
+    padding: 10px;
+    border-radius: 16px;
+    border: none;
+    cursor: pointer;
 }
 </style>
