@@ -40,6 +40,12 @@ const list1 = ref<IFieldItem[]>([
         type: "drop_down",
         options: [],
     },
+    {
+        id: uuid(),
+        label: "",
+        type: "drop_down",
+        options: [],
+    },
 ])
 
 const log = (evt: any) => {

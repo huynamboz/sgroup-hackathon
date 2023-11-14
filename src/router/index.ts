@@ -54,6 +54,10 @@ const router = createRouter({
             path: "/dashboard",
             component: () => import("@/views/dashboard/index.vue"),
         },
+        {
+            path: "/forms/:id/detail",
+            component: () => import("@/views/forms/detail/index.vue"),
+        },
     ],
 })
 

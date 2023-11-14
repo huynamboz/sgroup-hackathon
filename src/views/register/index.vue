@@ -3,7 +3,7 @@ import { useAuthStore } from "@/stores/auth"
 import { useRouter } from "vue-router"
 import { ref, unref } from "vue"
 import { IUser } from "@/types/user"
-import { addUserApi } from "@/services/user.service"
+import { registerApi } from "@/services/user.service"
 import { ElNotification } from "element-plus"
 
 const auth = useAuthStore()
@@ -30,7 +30,7 @@ const signUp = async () => {
             return
         }
         isMatchPassword.value = false
-        await addUserApi(user.value)
+        await registerApi(user.value)
         ElNotification({
             title: "Success",
             message: "Create user succesfully!",

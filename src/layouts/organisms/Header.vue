@@ -2,7 +2,7 @@
 import { onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
 import { useAuthStore } from "@/stores/auth"
-import { logoutApi } from "@/services/auth.service"
+import { logoutApi } from "@/services/user.service"
 
 defineProps<{}>()
 const router = useRouter()
@@ -36,7 +36,7 @@ onMounted(() => {
     <div class="nav-container">
         <div class="nav-container__body">
             <p class="nav-container__body__logo">S-FORM</p>
-            <div class="nav-container__body__action" v-if="isLogin">
+            <div class="nav-container__body__action" v-if="!isLogin">
                 <el-button type="primary" @click="goToLogin">Login</el-button>
                 <el-button type="primary" @click="goToRegister" plain>Register</el-button>
             </div>

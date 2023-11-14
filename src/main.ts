@@ -7,6 +7,7 @@ import 'element-plus/dist/index.css'
 import router from "./router"
 import { createPinia } from "pinia"
 import "./assets/css/global.css"
+import { initAuthStore } from '@/stores'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import JsonViewer from "vue3-json-viewer";
 import "vue3-json-viewer/dist/index.css";
@@ -18,6 +19,7 @@ app.use(JsonViewer);
   for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
   }
+  await initAuthStore()
   app.use(ElementPlus)
   router.isReady().then(() => {
         app.mount("#app")
