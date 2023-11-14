@@ -43,8 +43,8 @@ const list1 = ref<IFieldItem[]>([
     {
         id: uuid(),
         label: "",
-        type: "drop_down",
-        options: [],
+        type: "check_box",
+        options: ["OPtion 1"],
     },
 ])
 
@@ -112,6 +112,7 @@ const cloneDog = (data: IFieldItem) => {
                             drop_down box <el-icon><ArrowDown /></el-icon>
                         </div>
                     </el-tooltip>
+                   <el-checkbox v-if="element.type == 'check_box'" label="Group check box" />
                 </div>
             </template>
         </draggable>

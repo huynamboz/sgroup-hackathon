@@ -9,7 +9,7 @@
 <script lang="ts" setup>
 import { IFieldDetailForm } from "@/types/form"
 
-const tableField: IFieldDetailForm = [
+const tableField: IFieldDetailForm[] = [
     {
         label: "Date",
         prop: "date",

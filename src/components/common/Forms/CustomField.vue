@@ -34,6 +34,9 @@ const handleChange = (file: any, fileList: any) => {
             <div class="el-upload__tip">jpg/png files with a size less than 500kb</div>
         </template>
     </el-upload>
+    <el-checkbox-group v-else-if="field.type == 'check_box'">
+        <el-checkbox v-for="(item, index) in field.options" :key="item" :label="item" />
+    </el-checkbox-group>
 </template>
 <style scoped lang="scss">
 .upload-demo {

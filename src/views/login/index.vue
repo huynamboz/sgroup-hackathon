@@ -26,7 +26,7 @@ const submit = async () => {
             localStorage.setItem("refresh_token", data.refreshToken)
         })
         await initAuthStore()
-        router.push("/")
+        // router.push("/")
     } catch (error) {
         console.log(error)
     }
@@ -40,8 +40,7 @@ const submit = async () => {
             <div class="login-container__form__content">
                 <el-input v-model="user.email" placeholder="Enter your username" class="login-container__form__content__input" />
                 <el-input v-model="user.password" type="password" placeholder="Enter your password" show-password class="login-container__form__content__input" />
-                <div class="login-container__form__content__co">
-                </div>
+                <div class="login-container__form__content__co"></div>
                 <el-button @click="submit" class="login-container__form__content__submit" type="primary">Sign in</el-button>
                 <div class="login-container__form__content__register">
                     <span>Don't have an account?</span>
@@ -56,6 +55,7 @@ const submit = async () => {
 .login-container {
     width: 100%;
     height: 100%;
+    overflow: hidden;
     &__form {
         width: 35%;
         margin: auto;
