@@ -24,3 +24,7 @@ interface ISubmitForm {
 export const submitForm = async (id: string, data: ISubmitForm) => {
     return await axiosApiInstance.post(`/forms/${id}/submit`, data)
 }
+
+export const getAllsubmittedApi = async (id: string) => {
+    return await axiosApiInstance.get(`/forms/${id}/all_submit`)
+}
