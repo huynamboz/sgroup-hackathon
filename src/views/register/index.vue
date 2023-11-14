@@ -7,10 +7,12 @@ import { IUser } from "@/types/user"
 const user: IUser = ref({
     username: "",
     password: "",
+    rePassword: "",
 })
 
 const auth = useAuthStore()
 const router = useRouter()
+
 // if (auth.token) {
 //     // push back to home "/"
 //     router.push("/")
@@ -20,18 +22,15 @@ const router = useRouter()
 <template>
     <div class="login-container">
         <div class="login-container__form">
-            <h1 class="login-container__form__title">Sign in to your dashboard</h1>
+            <h1 class="login-container__form__title">Sign up</h1>
             <div class="login-container__form__content">
-                <el-input v-model="user.username" placeholder="Enter your username" class="login-container__form__content__input" />
-                <el-input v-model="user.password" type="password" placeholder="Enter your password" show-password class="login-container__form__content__input" />
-                <div class="login-container__form__content__co">
-                    <el-checkbox v-model="checked2">Remember me</el-checkbox>
-                    <el-link type="primary">Forgot password</el-link>
-                </div>
-                <el-button @click="hiiiii" class="login-container__form__content__submit" type="primary">Sign in</el-button>
-                <div class="login-container__form__content__register">
-                    <span>Don't have an account?</span>
-                    <el-link type="primary" href="/register">Register</el-link>
+                <el-input v-model="user.username" placeholder="Your username" class="login-container__form__content__input" />
+                <el-input v-model="user.password" type="password" placeholder="Your password" show-password class="login-container__form__content__input" />
+                <el-input v-model="user.rePassword" type="password" placeholder="Confirm Your password" show-password class="login-container__form__content__input" />
+                <el-button @click="hiiiii" class="login-container__form__content__submit" type="primary">Sign up</el-button>
+                <div class="login-container__form__content__login">
+                    <span>Already have an account?</span>
+                    <el-link type="primary" href="/login">Sign in</el-link>
                 </div>
             </div>
         </div>
@@ -72,7 +71,7 @@ const router = useRouter()
             &__submit {
                 width: 100%;
             }
-            &__register {
+            &__login {
                 span {
                     font-size: 12px;
                     padding-right: 8px;
