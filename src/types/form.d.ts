@@ -13,14 +13,15 @@ export interface IForm {
     id: string
     description: string
     title: string
+    requiredAuth?: boolean
     owner?: {
         name: string
         email: string
     }
     questions: IFieldItem[]
-    updatedAt: string
-    createdAt: string
-    
+    updatedAt?: string
+    createdAt?: string
+    shortId?: string
 }
 
 export interface IFieldDetailForm {

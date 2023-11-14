@@ -4,7 +4,6 @@ import { ref, computed } from "vue"
 import type { IFieldItem, IForm } from "@/types/form"
 import { v4 as uuid } from "uuid"
 
-
 defineEmits<{
     (
         e: "update:modelValue",
@@ -44,7 +43,7 @@ const list1 = ref<IFieldItem[]>([
         id: uuid(),
         label: "",
         type: "check_box",
-        options: ["OPtion 1"],
+        options: [],
     },
 ])
 
@@ -54,6 +53,17 @@ const log = (evt: any) => {
 const cloneDog = (data: IFieldItem) => {
     console.log("cloneDog", { ...data })
     const clone = { ...data }
+    if (clone.type === "drop_down" || clone.type === "check_box") {
+        clone.options = clone?.options?.map((item) => {
+            return {
+                ...item,
+                id: uuid(),
+            }
+        })
+        if (clone.options) {
+            return clone
+        }
+    }
     return {
         ...data,
         id: uuid(),
@@ -96,7 +106,7 @@ const cloneDog = (data: IFieldItem) => {
             <el-icon><Rank /></el-icon>
         </div>
         <draggable class="list-group" :clone="cloneDog" :group="{ name: 'people', pull: 'clone', put: false }" :list="list1" @change="log" item-key="name">
-            <template #item="{ element, index }">
+            <template #item="{ element }">
                 <div class="list-group-item">
                     <el-tooltip class="box-item" effect="dark" content="Input" placement="top" v-if="element.type == 'text'">
                         <div :class="`list-group__${element.type}`">text field</div>
@@ -112,7 +122,7 @@ const cloneDog = (data: IFieldItem) => {
                             drop_down box <el-icon><ArrowDown /></el-icon>
                         </div>
                     </el-tooltip>
-                   <el-checkbox v-if="element.type == 'check_box'" label="Group check box" />
+                    <el-checkbox v-if="element.type == 'check_box'" label="Group check box" />
                 </div>
             </template>
         </draggable>
