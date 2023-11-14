@@ -1,23 +1,34 @@
 <script setup lang="ts">
-import { ref, onBeforeMount } from "vue"
-import type { IForm, IAnswer } from "@/types/form"
-import CustomField from "./CustomField.vue"
-import { submitForm } from "@/services/form.service"
+import { ref, defineProps, onBeforeMount } from "vue";
+import type { IForm, IAnswer } from "@/types/form";
+import CustomField from "./CustomField.vue";
+import { submitForm } from "@/services/form.service";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
 
 const props = defineProps<{
     data: IForm
-}>()
-const answer = ref<IAnswer>({
-    questionId: "",
-    value: ""
-});
+}>();
+const answers = ref<IAnswer[]>([]);
 
-const handleSubmit = (): void => {
-    console.log(props.data)
+const handleSubmit = async (): void => {
+    console.log(answers.value);
+    await submitForm(route.params.id, answers.value).then(res => {
+        console.log(res["data"]);
+    }).catch(err => {
+        console.log(err)
+    })
 }
 const changeValue = (value: IAnswer): void => {
     console.log(value);
+    const existingAnswerIndex = answers.value.findIndex((answer) => answer.questionId === value.questionId);
+    if (existingAnswerIndex !== -1) {
+        answers.value.splice(existingAnswerIndex, 1);
+    }
+    answers.value = [...answers.value, value];
 }
+
 </script>
 <template>
     <div class="form-container">
@@ -28,7 +39,7 @@ const changeValue = (value: IAnswer): void => {
             </div>
             <div class="form-container__body__form">
                 <div class="form-container__body__form__item" v-for="field in data.questions" :key="field.id">
-                    <p class="form-item__name">{{ field.label }}</p>
+                    <p class="form-item__name">{{ 'Question: ' + field.label }}</p>
                     <custom-field @update:model-value="changeValue" v-model="answer" :field="field" />
                 </div>
             </div>

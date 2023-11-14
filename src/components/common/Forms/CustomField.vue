@@ -12,14 +12,17 @@ const props = defineProps<{
     modelValue: IAnswer
     field: IFieldItem
 }>()
-props.modelValue.questionId = props.field.id;
+const data = ref<IAnswer>({
+    questionId: props.field.id,
+    value: []
+})
 const handleChange = (file: any, fileList: any) => {
     console.log(file, fileList)
 }
 </script>
 <template>
-    <el-input v-if="field.type === 'text'" v-model="modelValue.value" @input="$emit('update:modelValue', modelValue)" placeholder="Please input" />
-    <el-select v-else-if="field.type === 'drop_down'" @change="$emit('update:modelValue', modelValue)" v-model="modelValue.value" @input="$emit('update:modelValue', modelValue)" placeholder="Please select">
+    <el-input v-if="field.type === 'text'" v-model="data.value" @input="$emit('update:modelValue', data)" placeholder="Please input" />
+    <el-select v-else-if="field.type === 'drop_down'" @change="$emit('update:modelValue', data)" v-model="data.value" @input="$emit('update:modelValue', data)" placeholder="Please select">
         <el-option v-for="item in field.options" :key="item" :label="item.value" :value="item" />
     </el-select>
     <el-upload :on-change="handleChange" v-else-if="field.type === 'file'" ref="uploadRef" class="upload-demo" action="http://103.195.237.70:3000/api/storages/upload" :auto-upload="true">
@@ -34,8 +37,8 @@ const handleChange = (file: any, fileList: any) => {
             <div class="el-upload__tip">jpg/png files with a size less than 500kb</div>
         </template>
     </el-upload>
-    <el-checkbox-group v-else-if="field.type == 'check_box'">
-        <el-checkbox v-for="(item, index) in field.options" :key="item" :label="item" />
+    <el-checkbox-group v-else-if="field.type == 'check_box'" v-model="data.value" @update:model-value="$emit('update:modelValue', data)">
+        <el-checkbox v-for="(item, index) in field.options" :key="item" :label="item" :value="data.value"/>
     </el-checkbox-group>
 </template>
 <style scoped lang="scss">
