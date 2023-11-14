@@ -15,7 +15,8 @@
         "paths": {
             "@/*": ["./src/*"]
         },
-        "typeRoots": ["./node_modules/@types", "./src/types"]
+        "typeRoots": ["./node_modules/@types", "./src/types"],
+        "types": ["element-plus/global"]
     },
     "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/stores/*.ts"],
     "references": [{ "path": "./tsconfig.node.json" }]

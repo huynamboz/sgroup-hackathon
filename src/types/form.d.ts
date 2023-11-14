@@ -19,3 +19,8 @@ export interface IForm {
     }
     questions: IFieldItem[]
 }
+
+export interface IFieldDetailForm {
+    label: string
+    prop: string
+}
