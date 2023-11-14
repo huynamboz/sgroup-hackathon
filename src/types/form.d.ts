@@ -18,6 +18,9 @@ export interface IForm {
         email: string
     }
     questions: IFieldItem[]
+    updatedAt: string
+    createdAt: string
+    
 }
 
 export interface IFieldDetailForm {

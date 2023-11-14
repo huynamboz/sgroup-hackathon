@@ -11,6 +11,9 @@ export const createFormApi = async (data: any) => {
 export const uploadApi = async (data: any) => {
     return await axiosApiInstance.post(`/storages/upload`, data)
 }
+export const getAllFormApi = async () => {
+    return await axiosApiInstance.get(`/forms`)
+}
 
 interface ISubmitForm {
     answers: Array<{
