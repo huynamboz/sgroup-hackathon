@@ -10,7 +10,6 @@ const uploadRef = ref<UploadInstance>()
 defineProps<{
     modelValue: string
     field: IFieldItem
-    options?: string[] | IOptionsCheckboxField[]
 }>()
 interface IData {
     input: string
@@ -23,20 +22,13 @@ const handleChange = (file: any, fileList: any) => {
 }
 </script>
 <template>
-    <el-input v-if="field.type === 'TEXT'" v-model="data.input" @input="$emit('update:modelValue', data.input)" placeholder="Please input" />
-    <el-select v-else-if="field.type === 'CHECKBOX'" @change="$emit('update:modelValue', data.input)" v-model="data.input" @input="$emit('update:modelValue', data.input)" placeholder="Please select">
-        <el-option v-for="item in options" :key="item" :label="item.label" :value="item" />
+    <el-input v-if="field.type === 'text'" v-model="data.input" @input="$emit('update:modelValue', data.input)" placeholder="Please input" />
+    <el-select v-else-if="field.type === 'drop_down'" @change="$emit('update:modelValue', data.input)" v-model="data.input" @input="$emit('update:modelValue', data.input)" placeholder="Please select">
+        <el-option v-for="item in field.options" :key="item" :label="item.value" :value="item" />
     </el-select>
-    <el-upload
-        :on-change="handleChange"
-        v-else-if="field.type === 'FILE'"
-        ref="uploadRef"
-        class="upload-demo"
-        action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-        :auto-upload="false"
-    >
+    <el-upload :on-change="handleChange" v-else-if="field.type === 'file'" ref="uploadRef" class="upload-demo" action="https://api.cloudinary.com/v1_1/dtpqh6cau/upload" :auto-upload="true">
         <template #trigger>
-            <div :class="`list-group__FILE`" v-if="field.type == 'FILE'">
+            <div :class="`list-group__FILE`" v-if="field.type == 'file'">
                 <el-icon><UploadFilled /></el-icon>
                 <p>Upload</p>
             </div>

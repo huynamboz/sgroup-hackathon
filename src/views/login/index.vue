@@ -6,10 +6,10 @@ defineProps<{}>()
 
 const auth = useAuthStore()
 const router = useRouter()
-if (auth.token) {
-    // push back to home "/"
-    router.push("/")
-}
+// if (auth.token) {
+//     // push back to home "/"
+//     router.push("/")
+// }
 </script>
 
 <template>

@@ -20,6 +20,9 @@ const auth = useAuthStore()
     max-width: 1440px;
     padding: 0 20px;
     margin: 0 auto;
+    margin-top: 56px;
+    overflow-y: auto;
+    height: calc(100vh - 56px);
 }
 .bg {
     position: absolute;

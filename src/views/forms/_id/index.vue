@@ -1,59 +1,41 @@
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref, onBeforeMount } from "vue"
 import FormView from "@/components/common/Forms/FormView.vue"
 import type { IForm } from "@/types/form"
+import { getFormApi } from "@/services/form.service"
+import { useRoute } from "vue-router"
+const route = useRoute()
+
+onBeforeMount(() => {
+    if (route.params.id) {
+        getFormDetail()
+    }
+})
+const getFormDetail = async (): Promise<void> => {
+    const res = await getFormApi(route.params.id as string)
+    if (res) {
+        data.value = res["data"]
+        console.log("dataInp", data.value)
+    }
+}
 
 const dataInp = ref<{
     TEXT: string
-    CHECKBOX: string
+    CHECKBOX: string[]
     FILE: string
     RADIO: string
 }>({
     TEXT: "",
-    CHECKBOX: "",
+    CHECKBOX: [""],
     FILE: "",
     RADIO: "",
 })
 
-const data = ref<IForm>({
-    id: "1",
-    user: {
-        name: "Nguyễn Văn A",
-        email: "",
-    },
-    form: {
-        name: "Tuyển thành viên",
-        description: "Tuyển thành viên cho chuyên môn lập trình khóa mùa đông 2023",
-        fields: [
-            {
-                title: "Tên của bạn",
-                type: "TEXT",
-            },
-            {
-                title: "Chọn chuyên môn",
-                type: "CHECKBOX",
-                options: [
-                    {
-                        label: "Lập trình web",
-                        value: "Lập trình web",
-                    },
-                    {
-                        label: "Lập trình mobile",
-                        value: "Lập trình mobile",
-                    },
-                    {
-                        label: "Lập trình game",
-                        value: "Lập trình game",
-                    },
-                ],
-            },
-        ],
-    },
-})
+const data = ref<IForm>()
 </script>
 <template>
-    <div class="form-container">
-        <FormView :data="data" />
+    <div class="form-containersad">
+        <FormView v-if="data" :data="data" />
     </div>
 </template>
 <style lang="scss" scoped>

@@ -1,28 +1,32 @@
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref, onBeforeMount } from "vue"
 import type { IForm } from "@/types/form"
 import CustomField from "./CustomField.vue"
+
 defineProps<{
     data: IForm
 }>()
+
 const dataInp = ref<{
-    TEXT: string
-    CHECKBOX: string
-    FILE: string
-    RADIO: string
+    text: string
+    select: string
+    file: string
+    radio: string
+    drop_down: string
 }>({
-    TEXT: "",
-    CHECKBOX: "",
-    FILE: "",
-    RADIO: "",
+    text: "",
+    select: "",
+    file: "",
+    radio: "",
+    drop_down: "",
 })
 </script>
 <template>
     <div class="form-container">
-        <h1 class="form-container__title">Tuyển thành viên</h1>
+        <h1 class="form-container__title">{{ data.title }}</h1>
         <div class="form-container__body">
             <div class="form-container__body__header">
-                <p class="form-container__body__header__subtitle">Tuyển thành viên cho chuyên môn lập trình khóa mùa đông 2023</p>
+                <p class="form-container__body__header__subtitle">{{ data.description }}</p>
             </div>
             <!-- <div class="form-container__body__form">
                   <el-input v-model="form.email" placeholder="Email"></el-input>
@@ -30,9 +34,9 @@ const dataInp = ref<{
                   <el-button type="primary">Login</el-button>
               </div> -->
             <div class="form-container__body__form">
-                <div class="form-container__body__form__item" v-for="field in data.form.fields" :key="field.title">
-                    <p class="form-item__name">{{ field.title }}</p>
-                    <custom-field v-if="dataInp" v-model="dataInp[`${field.type}`]" :field="field" :options="field?.options" />
+                <div class="form-container__body__form__item" v-for="field in data.questions" :key="field.id">
+                    <p class="form-item__name">{{ field.label }}</p>
+                    <custom-field v-if="dataInp" v-model="dataInp[`${field.type}`]" :field="field" :options="field?.optionsSelect" />
                 </div>
             </div>
             <div class="form-container__body__action">
@@ -54,6 +58,7 @@ const dataInp = ref<{
     &__body {
         margin-top: 20px;
         max-width: 1440px;
+        min-width: 450px;
         padding: 40px 40px;
         border-radius: 18px;
         display: flex;
