@@ -85,14 +85,14 @@ const title = ref("")
                                 </el-button>
                             </div>
                         </div>
-                        <el-checkbox-group style="width: 100%" v-if="element.type == 'checkbox'">
+                        <el-check_box-group style="width: 100%" v-if="element.type == 'check_box'">
                             <div style="display: flex; margin-top: 10px" v-for="(childOption, index) in element.options" :key="index">
-                                <el-checkbox :label="''" />
+                                <el-check_box :label="''" />
                                 <el-input v-model="element.options[index]" placeholder="Enter option" />
                             </div>
-                        </el-checkbox-group>
+                        </el-check_box-group>
                         <div style="display: flex; gap: 10px; align-items: center">
-                            <el-button v-if="element.type == 'checkbox'" type="primary" @click="() => element.options.push('')" round>Add option</el-button>
+                            <el-button v-if="element.type == 'check_box'" type="primary" @click="() => element.options.push('')" round>Add option</el-button>
                             <el-button style="cursor: pointer" @click="removeAt(index)" type="danger" :icon="Delete" circle />
                         </div>
                     </div>
