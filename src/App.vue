@@ -39,8 +39,9 @@ setTimeout(() => {
 
 <template>
     <!-- the loading screen that mentioned above -->
-    <div v-if="isLoadingLayout" class="layout-loading bg-white text-primary w-screen h-screen flex justify-center items-center fixed z-[999]">
-        <img src="vite.svg" alt="Loading" class="w-[10vw]" />
+    <div v-if="isLoadingLayout" class="loading">
+        <img src="./assets/vue.svg" alt="Loading" class="w-[10vw]" />
+        <p>S-FORM</p>
     </div>
 
     <Transition name="fade">
@@ -50,7 +51,7 @@ setTimeout(() => {
     </Transition>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 /*
     Enter and leave animations can use different
     durations and timing functions.
@@ -66,5 +67,23 @@ setTimeout(() => {
 .fade-enter-from,
 .fade-leave-to {
     opacity: 0;
+}
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    width: 100vw;
+    height: 100vh;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & > p {
+        font-size: 2rem;
+        font-weight: 700;
+        @include gradient-text;
+    }
 }
 </style>

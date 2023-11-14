@@ -1,24 +1,23 @@
 export interface IOptionsCheckboxField {
-    label: string
+    id: string
     value: string
 }
 export interface IFieldItem {
-    title: string
-    type: "TEXT" | "FILE" | "CHECKBOX" | "RADIO"
-    options?: string[] | IOptionsCheckboxField[]
+    id: string
+    label: string
+    type: "text" | "file" | "radio" | "drop_down"
+    options?: IOptionsCheckboxField[]
     files?: string[]
 }
 export interface IForm {
     id: string
-    user: {
+    description: string
+    title: string
+    owner: {
         name: string
         email: string
     }
-    form: {
-        name: string
-        description: string
-        fields: IFieldItem[]
-    }
+    questions: IFieldItem[]
 }
 
 export interface IFieldDetailForm {
