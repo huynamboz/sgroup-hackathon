@@ -2,6 +2,7 @@
 import { ref, onBeforeMount } from "vue"
 import type { IForm } from "@/types/form"
 import CustomField from "./CustomField.vue"
+import { submitForm } from "@/services/form.service"
 
 defineProps<{
     data: IForm
@@ -36,7 +37,7 @@ const dataInp = ref<{
             <div class="form-container__body__form">
                 <div class="form-container__body__form__item" v-for="field in data.questions" :key="field.id">
                     <p class="form-item__name">{{ field.label }}</p>
-                    <custom-field v-if="dataInp" v-model="dataInp[`${field.type}`]" :field="field" :options="field?.optionsSelect" />
+                    <custom-field v-if="dataInp" v-model="dataInp[`${field.type}`]" :field="field" />
                 </div>
             </div>
             <div class="form-container__body__action">

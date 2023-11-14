@@ -13,7 +13,7 @@ export interface IForm {
     id: string
     description: string
     title: string
-    owner: {
+    owner?: {
         name: string
         email: string
     }

@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref, computed } from "vue"
 import type { IForm } from "@/types/form"
 import FormItemPicker from "@/components/Forms/FormItemPicker.vue"
 import FormItemView from "@/components/Forms/FormItemView.vue"
 import { createFormApi } from "@/services/form.service"
+import { ElNotification } from "element-plus"
+import { useRouter } from "vue-router"
+const router = useRouter()
 
 const formData = ref<IForm>({
     id: "1",
@@ -23,9 +26,36 @@ const handleInputFormDetail = (val: { name: string; description: string }) => {
 
 const centerDialogVisible = ref(false)
 
+const formDataHandled = computed(() => {
+    const data = {
+        ...formData.value,
+        questions: formData.value.questions.map((item) => {
+            if (item.type === "drop_down") {
+                return {
+                    ...item,
+                    options: item?.options?.map((option) => option.value),
+                }
+            }
+            return item
+        }),
+    }
+    delete data.owner
+    return data
+})
 const confirmPublish = async (): Promise<void> => {
-    centerDialogVisible.value = false
-    const res = await createFormApi(formData.value)
+    try {
+        centerDialogVisible.value = false
+        console.log("formDataHandled", formDataHandled.value)
+        const res = await createFormApi(formDataHandled.value)
+        ElNotification({
+            title: "Success",
+            message: "Create form success",
+            type: "success",
+        })
+        router.push(`/forms/${res["data"]["_id"]}`)
+    } catch (error) {
+        console.log("error", error)
+    }
 }
 </script>
 <template>

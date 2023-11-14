@@ -26,7 +26,7 @@ const handleChange = (file: any, fileList: any) => {
     <el-select v-else-if="field.type === 'drop_down'" @change="$emit('update:modelValue', data.input)" v-model="data.input" @input="$emit('update:modelValue', data.input)" placeholder="Please select">
         <el-option v-for="item in field.options" :key="item" :label="item.value" :value="item" />
     </el-select>
-    <el-upload :on-change="handleChange" v-else-if="field.type === 'file'" ref="uploadRef" class="upload-demo" action="https://api.cloudinary.com/v1_1/dtpqh6cau/upload" :auto-upload="true">
+    <el-upload :on-change="handleChange" v-else-if="field.type === 'file'" ref="uploadRef" class="upload-demo" action="http://103.195.237.70:3000/api/storages/upload" :auto-upload="true">
         <template #trigger>
             <div :class="`list-group__FILE`" v-if="field.type == 'file'">
                 <el-icon><UploadFilled /></el-icon>

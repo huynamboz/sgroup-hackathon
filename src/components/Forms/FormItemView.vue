@@ -95,7 +95,7 @@ const title = ref("")
         <div>
             <el-button type="warning" round @click="isShowPreview = true">View result</el-button>
         </div>
-        <div class="preview-demo" v-if="isShowPreview">
+        <div class="preview-demo" v-if="isShowPreview" v-click-outside="() => (isShowPreview = false)">
             <div class="preview-demo__body">
                 <FormView :data="dataFormView" />
             </div>
