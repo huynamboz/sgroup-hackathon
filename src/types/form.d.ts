@@ -20,3 +20,8 @@ export interface IForm {
         fields: IFieldItem[]
     }
 }
+
+export interface IFieldDetailForm {
+    label: string
+    prop: string
+}
