@@ -8,7 +8,7 @@ import { ElNotification } from "element-plus"
 import { useRouter } from "vue-router"
 const router = useRouter()
 
-const formData = ref<IForm>({
+const formDataValue = ref<IForm>({
     id: "1",
     owner: {
         name: "Nguyễn Văn A",
@@ -20,16 +20,16 @@ const formData = ref<IForm>({
 })
 
 const handleInputFormDetail = (val: { name: string; description: string }) => {
-    formData.value.title = val.name
-    formData.value.description = val.description
+    formDataValue.value.title = val.name
+    formDataValue.value.description = val.description
 }
 
 const centerDialogVisible = ref(false)
 
-const formDataHandled = computed(() => {
+const formDataValueHandled = computed(() => {
     const data = {
-        ...formData.value,
-        questions: formData.value.questions.map((item) => {
+        ...formDataValue.value,
+        questions: formDataValue.value.questions.map((item) => {
             if (item.type === "drop_down") {
                 return {
                     ...item,
@@ -45,8 +45,8 @@ const formDataHandled = computed(() => {
 const confirmPublish = async (): Promise<void> => {
     try {
         centerDialogVisible.value = false
-        console.log("formDataHandled", formDataHandled.value)
-        const res = await createFormApi(formDataHandled.value)
+        console.log("formDataValueHandled", formDataValueHandled.value)
+        const res = await createFormApi(formDataValueHandled.value)
         ElNotification({
             title: "Success",
             message: "Create form success",
@@ -73,7 +73,7 @@ const confirmPublish = async (): Promise<void> => {
             <FormItemPicker @update:model-value="handleInputFormDetail" class="create-container__left"></FormItemPicker>
             <el-button @click="centerDialogVisible = true" style="width: 100%; margin-top: 10px" type="success" round>Public form</el-button>
         </div>
-        <FormItemView v-model="formData" class="create-container__right"></FormItemView>
+        <FormItemView v-model="formDataValue" class="create-container__right"></FormItemView>
     </div>
 </template>
 <style scoped lang="scss">

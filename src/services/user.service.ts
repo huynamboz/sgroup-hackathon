@@ -1,7 +1,7 @@
 import axiosApiInstance from "@/api"
 import { IUser } from "@/types/user"
 import axios from "axios"
-axios.defaults.baseURL = import.meta.env.VITE_API_URL
+axios.defaults.URL = import.meta.env.VITE_API_URL
 
 export const refreshAccessToken = async (): Promise<any> => {
     const refresh_token = localStorage.getItem("refresh_token")

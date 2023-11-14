@@ -5,7 +5,7 @@ export interface IOptionsCheckboxField {
 export interface IFieldItem {
     id: string
     label: string
-    type: "text" | "file" | "radio" | "drop_down"
+    type: "text" | "file" | "radio" | "drop_down" | "checkbox"
     options?: IOptionsCheckboxField[]
     files?: string[]
 }
@@ -18,6 +18,9 @@ export interface IForm {
         email: string
     }
     questions: IFieldItem[]
+    updatedAt: string
+    createdAt: string
+    
 }
 
 export interface IFieldDetailForm {
