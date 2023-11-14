@@ -39,14 +39,10 @@ const confirmPublish = async (): Promise<void> => {
         </template>
     </el-dialog>
     <div class="create-container">
-<<<<<<< HEAD
         <div>
             <FormItemPicker @update:model-value="handleInputFormDetail" class="create-container__left"></FormItemPicker>
             <el-button @click="centerDialogVisible = true" style="width: 100%; margin-top: 10px" type="success" round>Public form</el-button>
         </div>
-=======
-        <FormItemPicker v-model="formDetail" @update:model-value="handleInputFormDetail" class="create-container__left"></FormItemPicker>
->>>>>>> e079480 (feat: select box feature)
         <FormItemView v-model="formData" class="create-container__right"></FormItemView>
     </div>
 </template>

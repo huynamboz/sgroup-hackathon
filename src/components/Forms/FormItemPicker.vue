@@ -41,9 +41,10 @@ const list1 = ref<IFieldItem[]>([
         options: [],
     },
     {
-        title: "",
-        type: "SELECT",
-        optionsSelect: [{ id: uuid(), value: "" }],
+        id: uuid(),
+        label: "",
+        type: "drop_down",
+        options: [],
     },
 ])
 
