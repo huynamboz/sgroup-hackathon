@@ -10,13 +10,12 @@ const router = useRouter()
 
 const formDataValue = ref<IForm>({
     id: "1",
-    owner: {
-        name: "Nguyễn Văn A",
-        email: "",
-    },
     questions: [],
     description: "",
     title: "",
+    updatedAt: "",
+    createdAt: "",
+    value: undefined,
 })
 
 const handleInputFormDetail = (val: { name: string; description: string }) => {

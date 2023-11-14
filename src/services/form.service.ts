@@ -1,4 +1,5 @@
 import axiosApiInstance from "@/api"
+import type { IAnswer } from "@/types/form"
 
 export const getFormApi = async (id: string) => {
     return await axiosApiInstance.get(`/forms/${id}`)
@@ -21,8 +22,8 @@ interface ISubmitForm {
         value: string | string[]
     }>
 }
-export const submitForm = async (id: string, data: ISubmitForm) => {
-    return await axiosApiInstance.post(`/forms/${id}/submit`, data)
+export const submitForm = async (id: string, data: IAnswer[]) => {
+    return await axiosApiInstance.post(`/forms/${id}/submit`, { answers: data } )
 }
 
 export const getAllsubmittedApi = async (id: string) => {
