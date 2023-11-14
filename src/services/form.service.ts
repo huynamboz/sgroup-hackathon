@@ -1,15 +1,15 @@
-import api from "@/api"
+import axiosApiInstance from "@/api"
 
 export const getFormApi = async (id: string) => {
-    return await api.get(`/forms/${id}`)
+    return await axiosApiInstance.get(`/forms/${id}`)
 }
 
 export const createFormApi = async (data: any) => {
-    return await api.post(`/forms`, data)
+    return await axiosApiInstance.post(`/forms`, data)
 }
 
 export const uploadApi = async (data: any) => {
-    return await api.post(`/storages/upload`, data)
+    return await axiosApiInstance.post(`/storages/upload`, data)
 }
 
 interface ISubmitForm {
@@ -19,5 +19,5 @@ interface ISubmitForm {
     }>
 }
 export const submitForm = async (id: string, data: ISubmitForm) => {
-    return await api.post(`/forms/${id}/submit`, data)
+    return await axiosApiInstance.post(`/forms/${id}/submit`, data)
 }

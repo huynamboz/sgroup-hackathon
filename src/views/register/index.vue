@@ -3,15 +3,33 @@ import { useAuthStore } from "@/stores/auth"
 import { useRouter } from "vue-router"
 import { ref } from "vue"
 import { IUser } from "@/types/user"
-
-const user: IUser = ref({
-    username: "",
-    password: "",
-    rePassword: "",
-})
-
-const auth = useAuthStore()
+import { registerApi } from "@/services/user.service"
 const router = useRouter()
+
+const user = ref<IUser>({
+    username: "",
+    email: "",
+    password: "",
+})
+const submit = async () => {
+    try {
+        if (password.value.trim() != confirmPassword.value.trim()) {
+            notification.notify({
+                type: "error",
+                title: "Mật khẩu xác nhận không khớp",
+            })
+            return
+        }
+        await registerApi({ name: user.value, email: email.value.trim(), password: password.value.trim() }).then((res) => {
+            router.push("/login")
+        })
+        await initAuthStore()
+        router.push("/users")
+    } catch (error) {
+        console.log(error)
+    }
+}
+const auth = useAuthStore()
 
 // if (auth.token) {
 //     // push back to home "/"
@@ -25,9 +43,9 @@ const router = useRouter()
             <h1 class="login-container__form__title">Sign up</h1>
             <div class="login-container__form__content">
                 <el-input v-model="user.username" placeholder="Your username" class="login-container__form__content__input" />
-                <el-input v-model="user.password" type="password" placeholder="Your password" show-password class="login-container__form__content__input" />
-                <el-input v-model="user.rePassword" type="password" placeholder="Confirm Your password" show-password class="login-container__form__content__input" />
-                <el-button @click="hiiiii" class="login-container__form__content__submit" type="primary">Sign up</el-button>
+                <el-input v-model="user.email" type="email" placeholder="Your password" show-password class="login-container__form__content__input" />
+                <el-input v-model="user.password" type="password" placeholder="Confirm Your password" show-password class="login-container__form__content__input" />
+                <el-button @click="submit" class="login-container__form__content__submit" type="primary">Sign up</el-button>
                 <div class="login-container__form__content__login">
                     <span>Already have an account?</span>
                     <el-link type="primary" href="/login">Sign in</el-link>
