@@ -26,7 +26,7 @@ axiosApiInstance.interceptors.response.use(
     },
     async function (error) {
         const originalRequest = error.config
-        if (error.response.status === 401 && !originalRequest._retry && originalRequest.url !== "/auth/refresh-tokens" && originalRequest.url !== "/auth/login") {
+        if (error.response.status === 403 && !originalRequest._retry && originalRequest.url !== "/auth/refresh-tokens" && originalRequest.url !== "/auth/login") {
             originalRequest._retry = true
             try {
                 const token = await refreshAccessToken()
