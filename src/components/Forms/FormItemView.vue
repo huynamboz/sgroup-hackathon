@@ -4,6 +4,7 @@ import { ref, computed, watch } from "vue"
 import type { IFieldItem, IForm } from "@/types/form"
 import FormView from "@/components/common/Forms/FormView.vue"
 import { v4 as uuid } from "uuid"
+import { Delete } from "@element-plus/icons-vue"
 
 const props = defineProps<{
     modelValue: IForm
@@ -84,10 +85,20 @@ const title = ref("")
                                 </el-button>
                             </div>
                         </div>
-                        <el-icon style="cursor: pointer; margin-top: 10px" @click="removeAt(index)"><Remove /></el-icon>
+                        <el-checkbox-group style="width: 100%" v-if="element.type == 'checkbox'">
+                            <div style="display: flex; margin-top: 10px" v-for="(childOption, index) in element.options" :key="index">
+                                <el-checkbox :label="''" />
+                                <el-input v-model="element.options[index]" placeholder="Enter option" />
+                            </div>
+                        </el-checkbox-group>
+                        <div style="display: flex; gap: 10px; align-items: center">
+                            <el-button v-if="element.type == 'checkbox'" type="primary" @click="() => element.options.push('')" round>Add option</el-button>
+                            <el-button style="cursor: pointer" @click="removeAt(index)" type="danger" :icon="Delete" circle />
+                        </div>
                     </div>
                 </template>
             </draggable>
+
             <el-button type="primary" round>Submit</el-button>
         </div>
         <button @click="title = uuid()">Change</button>
@@ -152,8 +163,12 @@ const title = ref("")
         &-item {
             margin-top: 10px;
             display: flex;
+            flex-direction: column;
             align-items: start;
             gap: 10px;
+            border: 1px solid #d2d2d2;
+            border-radius: 10px;
+            padding: 10px;
         }
         &__text {
             width: 100%;
