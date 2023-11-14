@@ -4,8 +4,8 @@ import { useRouter } from "vue-router"
 import { ref } from "vue"
 import { IUser } from "@/types/user"
 
-const user: IUser = ref({
-    username: "",
+const user = ref<IUser>({
+    name: "",
     password: "",
 })
 
@@ -42,6 +42,7 @@ const router = useRouter()
 .login-container {
     width: 100%;
     height: 100%;
+    overflow: hidden;
     &__form {
         width: 35%;
         margin: auto;

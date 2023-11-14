@@ -5,7 +5,10 @@ export const useAuthStore = defineStore({
     state: () => ({
         token: "test",
         exp: 0,
-        fullName: "",
-        email: "nguyen.vh.nhan@gmail.com",
+        fullName: "Thanh Nhàn",
+        email: "phanthithanhnhan1409@gmail.com",
     }),
+    getters: {
+        getUserName: (state) => state.fullName,
+    },
 })

@@ -7,3 +7,7 @@ export const getFormApi = async (id: string) => {
 export const createFormApi = async (data: any) => {
     return await api.post(`/forms`, data)
 }
+
+export const getDetailSubmitApi = async (id: string) => {
+    return await api.post(`/forms/${id}/detail_submit`)
+}
