@@ -1,29 +1,25 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import type { IOptionsCheckboxField, IFieldItem } from "@/types/form"
+import type { IOptionsCheckboxField, IFieldItem, IAnswer } from "@/types/form"
+
 defineEmits<{
-    (e: "update:modelValue", value: string): void
+    (e: "update:modelValue", value: IAnswer): void
 }>()
 import type { UploadInstance } from "element-plus"
 
 const uploadRef = ref<UploadInstance>()
-defineProps<{
-    modelValue: string
+const props = defineProps<{
+    modelValue: IAnswer
     field: IFieldItem
 }>()
-interface IData {
-    input: string
-}
-const data = ref<IData>({
-    input: "",
-})
+props.modelValue.questionId = props.field.id;
 const handleChange = (file: any, fileList: any) => {
     console.log(file, fileList)
 }
 </script>
 <template>
-    <el-input v-if="field.type === 'text'" v-model="data.input" @input="$emit('update:modelValue', data.input)" placeholder="Please input" />
-    <el-select v-else-if="field.type === 'drop_down'" @change="$emit('update:modelValue', data.input)" v-model="data.input" @input="$emit('update:modelValue', data.input)" placeholder="Please select">
+    <el-input v-if="field.type === 'text'" v-model="modelValue.value" @input="$emit('update:modelValue', modelValue)" placeholder="Please input" />
+    <el-select v-else-if="field.type === 'drop_down'" @change="$emit('update:modelValue', modelValue)" v-model="modelValue.value" @input="$emit('update:modelValue', modelValue)" placeholder="Please select">
         <el-option v-for="item in field.options" :key="item" :label="item.value" :value="item" />
     </el-select>
     <el-upload :on-change="handleChange" v-else-if="field.type === 'file'" ref="uploadRef" class="upload-demo" action="http://103.195.237.70:3000/api/storages/upload" :auto-upload="true">
