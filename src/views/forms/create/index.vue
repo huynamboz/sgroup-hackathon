@@ -14,8 +14,8 @@ const formDataValue = ref<IForm>({
     description: "",
     requiredAuth: false,
     title: "",
-    updatedAt: "asc",
-    createdAt: "sdcs",
+    updatedAt: "",
+    createdAt: "",
 })
 
 const handleInputFormDetail = (val: { name: string; description: string }) => {

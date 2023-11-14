@@ -8,6 +8,11 @@ export interface IFieldItem {
     type: "text" | "file" | "radio" | "drop_down" | "check_box"
     options?: IOptionsCheckboxField[]
     files?: string[]
+    validation: {
+        min: string,
+        max: string,
+        require: boolean
+    }
 }
 export interface IForm {
     id: string
@@ -22,6 +27,11 @@ export interface IForm {
     updatedAt?: string
     createdAt?: string
     shortId?: string
+}
+
+export interface IAnswer {
+    questionId: string
+    value: string | string[] | FormData
 }
 
 export interface IFieldDetailForm {
