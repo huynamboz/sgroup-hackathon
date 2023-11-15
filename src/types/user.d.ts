@@ -1,5 +1,9 @@
 export interface IUser {
-    email: string
+    name?: string
     password: string
-    rePassword?: string
+    email: string
+}
+export interface IAuthState {
+    user: IUser
+    isLoggedIn?: boolean
 }

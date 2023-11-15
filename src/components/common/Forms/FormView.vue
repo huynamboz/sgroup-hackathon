@@ -1,26 +1,34 @@
 <script setup lang="ts">
-import { ref, onBeforeMount } from "vue"
-import type { IForm } from "@/types/form"
-import CustomField from "./CustomField.vue"
-import { submitForm } from "@/services/form.service"
+import { ref, defineProps, onBeforeMount } from "vue";
+import type { IForm, IAnswer } from "@/types/form";
+import CustomField from "./CustomField.vue";
+import { submitForm } from "@/services/form.service";
+import { useRoute } from "vue-router";
 
-defineProps<{
+const route = useRoute();
+
+const props = defineProps<{
     data: IForm
-}>()
+}>();
+const answers = ref<IAnswer[]>([]);
 
-const dataInp = ref<{
-    text: string
-    select: string
-    file: string
-    radio: string
-    drop_down: string
-}>({
-    text: "",
-    select: "",
-    file: "",
-    radio: "",
-    drop_down: "",
-})
+const handleSubmit = async (): void => {
+    console.log(answers.value);
+    await submitForm(route.params.id, answers.value).then(res => {
+        console.log(res["data"]);
+    }).catch(err => {
+        console.log(err)
+    })
+}
+const changeValue = (value: IAnswer): void => {
+    console.log(value);
+    const existingAnswerIndex = answers.value.findIndex((answer) => answer.questionId === value.questionId);
+    if (existingAnswerIndex !== -1) {
+        answers.value.splice(existingAnswerIndex, 1);
+    }
+    answers.value = [...answers.value, value];
+}
+
 </script>
 <template>
     <div class="form-container">
@@ -29,19 +37,14 @@ const dataInp = ref<{
             <div class="form-container__body__header">
                 <p class="form-container__body__header__subtitle">{{ data.description }}</p>
             </div>
-            <!-- <div class="form-container__body__form">
-                  <el-input v-model="form.email" placeholder="Email"></el-input>
-                  <el-input v-model="form.password" placeholder="Password"></el-input>
-                  <el-button type="primary">Login</el-button>
-              </div> -->
             <div class="form-container__body__form">
                 <div class="form-container__body__form__item" v-for="field in data.questions" :key="field.id">
-                    <p class="form-item__name">{{ field.label }}</p>
-                    <custom-field v-if="dataInp" v-model="dataInp[`${field.type}`]" :field="field" />
+                    <p class="form-item__name">{{ 'Question: ' + field.label }}</p>
+                    <custom-field @update:model-value="changeValue" v-model="answer" :field="field" />
                 </div>
             </div>
             <div class="form-container__body__action">
-                <el-button type="primary" round>Submit</el-button>
+                <el-button type="primary" round @click="handleSubmit">Submit</el-button>
             </div>
         </div>
     </div>

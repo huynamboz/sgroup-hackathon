@@ -43,8 +43,16 @@ const router = createRouter({
             component: () => import("@/views/forms/_id/index.vue"),
         },
         {
+            path: "/forms/:id/detail",
+            component: () => import("@/views/forms/detail/index.vue"),
+        },
+        {
             path: "/forms/create",
             component: () => import("@/views/forms/create/index.vue"),
+        },
+        {
+            path: "/forms/:id/submit",
+            component: () => import("@/views/forms/submit/index.vue"),
         },
         {
             path: "/dashboard",
@@ -53,6 +61,10 @@ const router = createRouter({
         {
             path: "/forms/:id/detail",
             component: () => import("@/views/forms/detail/index.vue"),
+        },
+        {
+            path: "/s/:id",
+            component: () => import("@/views/s/index.vue"),
         },
     ],
 })

@@ -11,7 +11,6 @@ axiosApiInstance.interceptors.request.use(
         config.headers = {
             Authorization: `Bearer ${access_token}`,
             Accept: "application/json",
-            "Content-Type": "application/x-www-form-urlencoded",
         }
         return config
     },
@@ -26,7 +25,7 @@ axiosApiInstance.interceptors.response.use(
     },
     async function (error) {
         const originalRequest = error.config
-        if (error.response.status === 401 && !originalRequest._retry && originalRequest.url !== "/auth/refresh-tokens" && originalRequest.url !== "/auth/login") {
+        if (error.response.status === 403 && !originalRequest._retry && originalRequest.url !== "/auth/refresh-tokens" && originalRequest.url !== "/auth/login") {
             originalRequest._retry = true
             try {
                 const token = await refreshAccessToken()

@@ -1,4 +1,5 @@
 import axiosApiInstance from "@/api"
+import type { IAnswer } from "@/types/form"
 
 export const getFormApi = async (id: string) => {
     return await axiosApiInstance.get(`/forms/${id}`)
@@ -11,6 +12,9 @@ export const createFormApi = async (data: any) => {
 export const uploadApi = async (data: any) => {
     return await axiosApiInstance.post(`/storages/upload`, data)
 }
+export const getAllFormApi = async () => {
+    return await axiosApiInstance.get(`/forms`)
+}
 
 interface ISubmitForm {
     answers: Array<{
@@ -18,6 +22,14 @@ interface ISubmitForm {
         value: string | string[]
     }>
 }
-export const submitForm = async (id: string, data: ISubmitForm) => {
-    return await axiosApiInstance.post(`/forms/${id}/submit`, data)
+export const submitForm = async (id: string, data: IAnswer[]) => {
+    return await axiosApiInstance.post(`/forms/${id}/submit`, { answers: data } )
+}
+
+export const getAllsubmittedApi = async (id: string) => {
+    return await axiosApiInstance.get(`/forms/${id}/all_submit`)
+}
+
+export const getShortLink = async (id: string) => {
+    return await axiosApiInstance.post(`/url/${id}/expand`)
 }

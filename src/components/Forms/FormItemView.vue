@@ -28,11 +28,8 @@ const dataFormView = computed((): IForm => {
         id: "1",
         title: props.modelValue.title,
         description: props.modelValue.description,
+        requiredAuth: props.modelValue.requiredAuth,
         questions: list2.value,
-        owner: {
-            email: "1",
-            name: "Nguyen Van A",
-        },
     }
     console.log("dataFormView", data)
     return data
@@ -61,13 +58,13 @@ const title = ref("")
                             <el-icon><UploadFilled /></el-icon>
                             <p>Upload</p>
                         </div>
-                        <div class="selectbox-container" v-if="element.type == 'drop_down'">
+                        <div class="selectbox-container" v-if="element.type == 'drop_down'" :key="element.id">
                             <el-select placeholder="Choose option">
                                 <el-option v-for="item in element.options" :key="item.id" :label="item.value" :value="item.value" />
                             </el-select>
                             <div class="selectbox-container-item">
                                 <div class="selectbox-container-item__inp">
-                                    <div class="selectbox-container-item__inp__body" v-for="(item, i) in element.options" :key="item.id">
+                                    <div class="selectbox-container-item__inp__body" v-for="(dropEle, i) in element.options" :key="dropEle.id">
                                         <el-icon style="cursor: pointer; margin-top: 10px" @click="element.options.splice(i, 1)"><Remove /></el-icon>
                                         <el-input v-model="element.options[i].value" placeholder="Enter option" />
                                     </div>
@@ -85,14 +82,26 @@ const title = ref("")
                                 </el-button>
                             </div>
                         </div>
-                        <el-checkbox-group style="width: 100%" v-if="element.type == 'checkbox'">
-                            <div style="display: flex; margin-top: 10px" v-for="(childOption, index) in element.options" :key="index">
-                                <el-checkbox :label="''" />
-                                <el-input v-model="element.options[index]" placeholder="Enter option" />
+                        <el-check_box-group style="width: 100%" v-if="element.type == 'check_box'" :key="element.id">
+                            <div style="display: flex; margin-top: 10px" v-for="(childOption, o) in element.options" :key="childOption.id">
+                                <el-check_box :label="''" />
+                                <el-input v-model="element.options[o].value" placeholder="Enter option" />
                             </div>
-                        </el-checkbox-group>
+                        </el-check_box-group>
                         <div style="display: flex; gap: 10px; align-items: center">
-                            <el-button v-if="element.type == 'checkbox'" type="primary" @click="() => element.options.push('')" round>Add option</el-button>
+                            <el-button
+                                v-if="element.type == 'check_box'"
+                                type="primary"
+                                @click="
+                                    () =>
+                                        element.options.push({
+                                            id: uuid(),
+                                            value: '',
+                                        })
+                                "
+                                round
+                                >Add option</el-button
+                            >
                             <el-button style="cursor: pointer" @click="removeAt(index)" type="danger" :icon="Delete" circle />
                         </div>
                     </div>
@@ -101,13 +110,13 @@ const title = ref("")
 
             <el-button type="primary" round>Submit</el-button>
         </div>
-        <button @click="title = uuid()">Change</button>
-        <JsonViewer :value="list2" :key="title" copyable boxed sort theme="jv-light" />
-        <div>
+        <!-- <button @click="title = uuid()">Change</button>
+        <JsonViewer :value="list2" :key="title" copyable boxed sort theme="jv-light" /> -->
+        <div style="margin-top: 10px">
             <el-button type="warning" round @click="isShowPreview = true">View result</el-button>
         </div>
-        <div class="preview-demo" v-if="isShowPreview" v-click-outside="() => (isShowPreview = false)">
-            <div class="preview-demo__body">
+        <div @click="() => (isShowPreview = false)" class="preview-demo" v-if="isShowPreview">
+            <div class="preview-demo__body" @click.stop>
                 <FormView :data="dataFormView" />
             </div>
         </div>
@@ -120,6 +129,7 @@ const title = ref("")
     left: 0;
     width: 100%;
     height: 100%;
+    z-index: 99;
     display: flex;
     justify-content: center;
     align-items: center;
