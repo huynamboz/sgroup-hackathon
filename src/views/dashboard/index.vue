@@ -13,9 +13,13 @@ import UserList from "@/views/dashboard/UserList/index.vue"
 <style lang="scss" scoped>
 .container-dasboard {
     width: 100%;
-    height: 100%;
+    height: 90%;
+    box-shadow: $shadow-primary;
     background: white;
+    border-radius: 18px;
     display: flex;
+    margin-top: 20px;
+    padding: 20px;
     overflow-x: hidden;
 }
 

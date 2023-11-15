@@ -41,6 +41,51 @@ const formDataValueHandled = computed(() => {
     delete data.owner
     return data
 })
+
+const checkValidate = (): boolean => {
+    if (formDataValue.value.title === "") {
+        ElNotification({
+            title: "Error",
+            message: "Title of form is required",
+            type: "error",
+        })
+        return false
+    }
+    if (formDataValue.value.description === "") {
+        ElNotification({
+            title: "Error",
+            message: "Description of form is required",
+            type: "error",
+        })
+        return false
+    }
+    if (formDataValue.value.questions.length === 0) {
+        ElNotification({
+            title: "Error",
+            message: "Question is required",
+            type: "error",
+        })
+        return false
+    } else {
+        let check = true
+        formDataValue.value.questions.forEach((item) => {
+            if (item.label === "" || item.label === undefined) {
+                ElNotification({
+                    title: "Error",
+                    message: "Question title is required",
+                    type: "error",
+                })
+                check = false
+            }
+        })
+        if (!check) return false
+    }
+    return true
+}
+const questionPushed = () => {
+    if (!checkValidate()) return
+    centerDialogVisible.value = true
+}
 const confirmPublish = async (): Promise<void> => {
     try {
         centerDialogVisible.value = false
@@ -71,7 +116,7 @@ const confirmPublish = async (): Promise<void> => {
         <div>
             <FormItemPicker @update:model-value="handleInputFormDetail" class="create-container__left"></FormItemPicker>
             <el-checkbox v-model="formDataValue.requiredAuth" label="REQUIRED AUTH" size="large" />
-            <el-button @click="centerDialogVisible = true" style="width: 100%; margin-top: 10px" type="success" round>Public form</el-button>
+            <el-button @click="questionPushed" style="width: 100%; margin-top: 10px" type="success" round>Public form</el-button>
         </div>
         <FormItemView v-model="formDataValue" class="create-container__right"></FormItemView>
     </div>

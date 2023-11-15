@@ -2,11 +2,10 @@
     <div class="container-list">
         <div class="container-search">
             <div class="container-left">
-                <h1>User List</h1>
-                <span class="input-search">
+                <!-- <span class="input-search">
                     <el-icon class="icon-search"><Search /></el-icon>
                     <input type="text" v-model="keySearch" placeholder="Enter title, description..." />
-                </span>
+                </span> -->
             </div>
             <div class="button-create">
                 <button @click="CreateForm()">Create Form</button>
