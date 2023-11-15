@@ -4,7 +4,7 @@ import type { IForm, IAnswer } from "@/types/form"
 import CustomField from "./CustomField.vue"
 import { submitForm } from "@/services/form.service"
 import { useRoute } from "vue-router"
-
+import { ElNotification } from "element-plus"
 const route = useRoute()
 
 const props = defineProps<{
@@ -14,12 +14,38 @@ const answers = ref<IAnswer[]>([])
 
 const handleSubmit = async (): void => {
     console.log(answers.value)
-    await submitForm(route.params.id, answers.value)
+
+    // check if all questions are answered
+    const unansweredQuestions = props.data.questions.filter((question) => {
+        return answers.value.findIndex((answer) => answer.questionId === question.id) === -1
+    })
+
+    if (unansweredQuestions.length > 0) {
+        ElNotification({
+            title: "Error",
+            message: "Please answer all questions",
+            type: "error",
+        })
+        return
+    }
+
+    await submitForm(route.params.id as string, answers.value)
         .then((res) => {
             console.log(res["data"])
+            ElNotification({
+                title: "Success",
+                message: "Submit form successfully",
+                type: "success",
+            })
         })
         .catch((err) => {
             console.log(err)
+
+            ElNotification({
+                title: "Error",
+                message: "Submit form failed",
+                type: "error",
+            })
         })
 }
 const changeValue = (value: IAnswer): void => {
@@ -40,7 +66,7 @@ const changeValue = (value: IAnswer): void => {
             </div>
             <div class="form-container__body__form">
                 <div class="form-container__body__form__item" v-for="field in data.questions" :key="field.id">
-                    <p class="form-item__name">{{ "Question: " + field.label }}</p>
+                    <p class="form-item__name">{{ "Question *: " + field.label }}</p>
                     <custom-field @update:model-value="changeValue" v-model="answer" :field="field" />
                 </div>
             </div>
