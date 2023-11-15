@@ -29,3 +29,7 @@ export const submitForm = async (id: string, data: IAnswer[]) => {
 export const getAllsubmittedApi = async (id: string) => {
     return await axiosApiInstance.get(`/forms/${id}/all_submit`)
 }
+
+export const getShortLink = async (id: string) => {
+    return await axiosApiInstance.post(`/url/${id}/expand`)
+}

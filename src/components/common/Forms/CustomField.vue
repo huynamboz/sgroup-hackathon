@@ -38,7 +38,7 @@ const handleChange = (file: any, fileList: any) => {
         </template>
     </el-upload>
     <el-checkbox-group v-else-if="field.type == 'check_box'" v-model="data.value" @update:model-value="$emit('update:modelValue', data)">
-        <el-checkbox v-for="(item, index) in field.options" :key="item" :label="item" :value="data.value"/>
+        <el-checkbox v-for="(item, index) in field.options" :key="item" :label="item" :value="data.value" />
     </el-checkbox-group>
 </template>
 <style scoped lang="scss">

@@ -12,10 +12,10 @@ const formDataValue = ref<IForm>({
     id: "1",
     questions: [],
     description: "",
+    requiredAuth: false,
     title: "",
     updatedAt: "",
     createdAt: "",
-    value: undefined,
 })
 
 const handleInputFormDetail = (val: { name: string; description: string }) => {
@@ -29,7 +29,7 @@ const formDataValueHandled = computed(() => {
     const data = {
         ...formDataValue.value,
         questions: formDataValue.value.questions.map((item) => {
-            if (item.type === "drop_down") {
+            if (item.type === "drop_down" || item.type === "check_box") {
                 return {
                     ...item,
                     options: item?.options?.map((option) => option.value),
@@ -70,6 +70,7 @@ const confirmPublish = async (): Promise<void> => {
     <div class="create-container">
         <div>
             <FormItemPicker @update:model-value="handleInputFormDetail" class="create-container__left"></FormItemPicker>
+            <el-checkbox v-model="formDataValue.requiredAuth" label="REQUIRED AUTH" size="large" />
             <el-button @click="centerDialogVisible = true" style="width: 100%; margin-top: 10px" type="success" round>Public form</el-button>
         </div>
         <FormItemView v-model="formDataValue" class="create-container__right"></FormItemView>
