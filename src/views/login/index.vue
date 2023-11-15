@@ -31,7 +31,7 @@ const submit = async () => {
         if (tmpLink) {
             router.push("/forms/" + tmpLink)
             localStorage.removeItem("tempLink")
-        } else router.push("/dashboard")
+        } else router.push("/")
     } catch (error) {
         console.log(error)
     }

@@ -10,11 +10,24 @@ const authStore = useAuthStore()
 
 const goToLogin: () => void = () => {
     router.push("/login")
+    isVisble.value = false
 }
 const goToRegister: () => void = () => {
     router.push("/register")
+    isVisble.value = false
 }
-
+const goToDashBoard: () => void = () => {
+    router.push("/")
+    isVisble.value = false
+}
+const goToCreateForm: () => void = () => {
+    router.push("/forms/create")
+    isVisble.value = false
+}
+const isVisble = ref<boolean>(false)
+const toggleMenu = (): void => {
+    isVisble.value = !isVisble.value
+}
 const isLogin = ref<boolean | undefined>(false)
 
 const logout: () => Promise<void> = async () => {
@@ -47,7 +60,30 @@ const logout: () => Promise<void> = async () => {
             <div class="nav-container__body__info" v-else>
                 <el-icon><Avatar /></el-icon> |
                 <p>{{ authStore.getUserName() }}</p>
-                <el-icon class="nav-container__body__info__icon-right" @click="logout"><Right /></el-icon>
+                <div class="list-option">
+                    <button @click="toggleMenu">
+                        <div class="menu-main">
+                            <el-icon><Menu /></el-icon><span>Menu</span>
+                        </div>
+                    </button>
+                    <div class="options" v-if="isVisble">
+                        <div>
+                            <button @click="logout">
+                                <el-icon><CaretRight /></el-icon><span>Log Out</span>
+                            </button>
+                        </div>
+                        <div>
+                            <button @click="goToDashBoard">
+                                <el-icon><CaretRight /></el-icon><span>Dashboard</span>
+                            </button>
+                        </div>
+                        <div>
+                            <button @click="goToCreateForm">
+                                <el-icon><CaretRight /></el-icon><span>Create Form</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -96,5 +132,52 @@ const logout: () => Promise<void> = async () => {
             }
         }
     }
+}
+.list-option {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.options {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    /* bottom: -100%; */
+    top: 54px;
+    z-index: 999;
+    border-radius: 16px;
+    background: #fff;
+    padding: 10px;
+    width: 212px;
+    right: 10px;
+    box-shadow: $shadow-primary;
+    border: 1px solid #ebeef5;
+}
+.options span {
+    padding-left: 3px;
+}
+.options button {
+    border: none;
+    cursor: pointer;
+    background: transparent;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-align: left;
+    width: 100%;
+}
+.options button:hover {
+    background-color: #f2f3f4;
+}
+.menu-main {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding: 3px;
+    background-color: #fff;
+    cursor: pointer;
+}
+.menu-main span {
+    padding-left: 3px;
 }
 </style>
