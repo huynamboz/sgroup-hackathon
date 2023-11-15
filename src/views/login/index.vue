@@ -27,8 +27,11 @@ const submit = async () => {
         })
         await initAuthStore()
         console.log("hee")
-
-        router.push("/dashboard")
+        const tmpLink = localStorage.getItem("tempLink")
+        if (tmpLink) {
+            router.push("/forms/" + tmpLink)
+            localStorage.removeItem("tempLink")
+        } else router.push("/dashboard")
     } catch (error) {
         console.log(error)
     }

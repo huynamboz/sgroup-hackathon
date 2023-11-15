@@ -3,21 +3,28 @@ import { ref, computed, onBeforeMount } from "vue"
 import FormView from "@/components/common/Forms/FormView.vue"
 import type { IForm } from "@/types/form"
 import { getFormApi } from "@/services/form.service"
-import { useRoute } from "vue-router"
+import { useRoute, useRouter } from "vue-router"
 import QRCodeVue3 from "qrcode-vue3"
 import { Link } from "@element-plus/icons-vue"
 const route = useRoute()
-
+const router = useRouter()
 onBeforeMount(() => {
     if (route.params.id) {
         getFormDetail()
     }
 })
 const getFormDetail = async (): Promise<void> => {
-    const res = await getFormApi(route.params.id as string)
-    if (res) {
-        data.value = res["data"]
-        console.log("dataInp", data.value)
+    try {
+        const res = await getFormApi(route.params.id as string)
+        if (res) {
+            data.value = res["data"]
+            console.log("dataInp", data.value)
+        }
+    } catch (error) {
+        //save temp link to localstorage
+        console.log("error", error)
+        isShowNotify.value = true
+        localStorage.setItem("tempLink", route.params.id as string)
     }
 }
 const getDomain = computed(() => {
@@ -36,8 +43,17 @@ const dataInp = ref<{
 })
 const isShow = ref<boolean>(false)
 const data = ref<IForm>()
+const isShowNotify = ref<boolean>(false)
 </script>
 <template>
+    <el-dialog style="border-radius: var(--el-border-radius-round)" v-model="isShowNotify" title="NOTIFICATION" width="300px" center>
+        <span style="text-align: center"> This is private form Please login to continue </span>
+        <template #footer>
+            <span class="dialog-footer">
+                <el-button type="primary" @click="router.push('/login')"> Login </el-button>
+            </span>
+        </template>
+    </el-dialog>
     <div class="form-containersad">
         <div style="display: flex; flex-direction: column; align-items: center; gap: 10px">
             <FormView v-if="data" :data="data" />
