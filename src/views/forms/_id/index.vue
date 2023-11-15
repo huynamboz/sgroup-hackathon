@@ -21,7 +21,7 @@ const getFormDetail = async (): Promise<void> => {
     }
 }
 const getDomain = computed(() => {
-    return window.location.origin + "/forms/" + data?.value?.shortId
+    return window.location.origin + "/s/" + data?.value?.shortId
 })
 const dataInp = ref<{
     TEXT: string
