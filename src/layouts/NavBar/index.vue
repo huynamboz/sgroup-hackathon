@@ -1,23 +1,15 @@
-<script setup lang="ts">
-    
-</script>
+<script setup lang="ts"></script>
 <template>
     <div class="container-navbar-left">
         <div class="ava-nav-left">
-            <img src="src/images/logo.jpg" alt="S-group Logo">
+            <img src="src/images/logo.jpg" alt="S-group Logo" />
         </div>
         <div class="list-dashboard">
             <div class="dashboard">
-                    <span class="icon"><el-icon><Operation /></el-icon></span>
-                    <a href="">Dashboard</a>
-            </div>
-            <div class="dashboard">
-                    <span class="icon"><el-icon><Odometer /></el-icon></span>
-                    <a href="">Dashboard</a>
-            </div>
-            <div class="dashboard">
-                    <span class="icon"><el-icon><User /></el-icon></span>
-                    <a href="">Dashboard</a>
+                <span class="icon"
+                    ><el-icon><Operation /></el-icon
+                ></span>
+                <a href="">Dashboard</a>
             </div>
         </div>
     </div>
@@ -28,7 +20,7 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    border-right: 1px solid #e0e0e0; 
+    border-right: 1px solid #e0e0e0;
     align-items: center;
     gap: 20px;
     padding: 15px;
@@ -38,9 +30,9 @@
     max-height: 200px;
 }
 .container-navbar-left a {
-  text-decoration: none;
-  font-size: 14px;
-  color: gray;
+    text-decoration: none;
+    font-size: 14px;
+    color: gray;
 }
 .dashboard .icon {
     text-align: center;
@@ -52,5 +44,4 @@
 .dashboard {
     padding: 20px;
 }
-
 </style>
