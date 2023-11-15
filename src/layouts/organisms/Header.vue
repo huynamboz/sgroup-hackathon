@@ -14,7 +14,16 @@ const goToLogin: () => void = () => {
 const goToRegister: () => void = () => {
     router.push("/register")
 }
-
+const goToDashBoard: () => void = () => {
+    router.push("/dashboard")
+}
+const goToCreateForm: () => void = () => {
+    router.push("/forms/create")
+}
+const isVisble = ref<boolean>(false)
+const toggleMenu = (): void => {
+    isVisble.value = !isVisble.value
+}
 const isLogin = ref<boolean | undefined>(false)
 
 const logout: () => Promise<void> = async () => {
@@ -47,7 +56,30 @@ const logout: () => Promise<void> = async () => {
             <div class="nav-container__body__info" v-else>
                 <el-icon><Avatar /></el-icon> |
                 <p>{{ authStore.getUserName() }}</p>
-                <el-icon class="nav-container__body__info__icon-right" @click="logout"><Right /></el-icon>
+                <div class="list-option">
+                    <button @click="toggleMenu">
+                        <div class="menu-main">
+                            <el-icon><Menu /></el-icon><span>Menu</span>
+                        </div>
+                    </button>
+                    <div class="options" v-if="isVisble">
+                            <div>
+                            <button @click="logout">
+                                <el-icon><CaretRight /></el-icon><span>Log Out</span>
+                            </button>
+                        </div>
+                        <div>
+                            <button @click="goToDashBoard">
+                                <el-icon><CaretRight /></el-icon><span>Dashboard</span>
+                            </button>
+                        </div>
+                        <div>
+                            <button @click="goToCreateForm">
+                                <el-icon><CaretRight /></el-icon><span>Create Form</span>
+                            </button>
+                        </div>
+                        </div>
+               </div>
             </div>
         </div>
     </div>
@@ -96,5 +128,44 @@ const logout: () => Promise<void> = async () => {
             }
         }
     }
+}
+.list-option {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.options {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    bottom: -100%;
+    z-index: 999;
+    border-radius: 16px;
+
+}
+.options span {
+    padding-left: 3px;
+}
+.options button {
+    background-color: #fff;
+    border: none;
+    border: 1px solid #f2f3f4;
+    cursor: pointer;
+    border-radius: 8px 8px;
+}
+.options button:hover {
+    background-color: #f2f3f4;
+}
+.menu-main {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding: 3px;
+    background-color: #fff;
+    cursor: pointer;
+}
+.menu-main span {
+    padding-left: 3px;
 }
 </style>
