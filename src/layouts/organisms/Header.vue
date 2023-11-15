@@ -52,7 +52,7 @@ const logout: () => Promise<void> = async () => {
 <template>
     <div class="nav-container">
         <div class="nav-container__body">
-            <p class="nav-container__body__logo">S-FORM</p>
+            <router-link to="/" class="nav-container__body__logo">S-FORM</router-link>
             <div class="nav-container__body__action" v-if="!authStore.getIsLoggedIn()">
                 <el-button type="primary" @click="goToLogin">Login</el-button>
                 <el-button type="primary" @click="goToRegister" plain>Register</el-button>
