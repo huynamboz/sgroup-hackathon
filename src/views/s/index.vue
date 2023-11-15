@@ -9,7 +9,7 @@ onBeforeMount(async () => {
     if (route.params.id) {
         const res = await getShortLink(route.params.id as string)
         if (res) {
-            router.push(res.data)
+            router.push("/forms/" + res.data.formId)
         }
     }
 })
